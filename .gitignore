@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ambiente virtual (cada pessoa cria o seu, nunca vai para o Git)
 .venv/
 
@@ -13,3 +14,14 @@ __pycache__/
 
 # Bases de dados criadas pelo pipeline (Sessão 6)
 /*.db
+=======
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+.env
+>>>>>>> e4819082508f10817a867a03fb286767376a833b

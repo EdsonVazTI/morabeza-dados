@@ -93,14 +93,30 @@ def aplicar_desconto(df: pd.DataFrame) -> pd.DataFrame:
 
 # ---------------------------------------------------------------- Extensão (opcional)
 
-def otimizar_tipos(df: pd.DataFrame) -> pd.DataFrame:
-    """Converte colunas de texto repetitivo em category e reduz os inteiros."""
     # EXTENSÃO: astype("category") nas colunas de texto que se repetem (ilha, tipo, categoria,
     #           nome, produto_id) e pd.to_numeric(..., downcast="integer") em quantidade e preco_unitario.
-    raise NotImplementedError("Extensão por fazer")
+def otimizar_tipos(df: pd.DataFrame) -> pd.DataFrame:
+    """Converte colunas de texto repetitivo em category e reduz os inteiros."""
+    """Reduz a memória usada pelas colunas indicadas."""
+    df = df.copy()
+    categorias = ["ilha", "tipo", "categoria", "nome", "produto_id"]
+
+    df[categorias] = df[categorias].astype("category")
+    df["quantidade"] = pd.to_numeric(df["quantidade"], downcast="integer")
+    df["preco_unitario"] = pd.to_numeric(
+        df["preco_unitario"], downcast="integer"
+    )
+
+    return df
 
 
+   
+    # EXTENSÃO: tabela.reset_index().melt(id_vars="mes", var_name="ilha", value_name="total")
 def formato_longo(tabela: pd.DataFrame) -> pd.DataFrame:
     """Passa a tabela mensal (uma coluna por ilha) para formato longo: mes, ilha, total."""
-    # EXTENSÃO: tabela.reset_index().melt(id_vars="mes", var_name="ilha", value_name="total")
-    raise NotImplementedError("Extensão por fazer")
+    """Devolve uma linha por combinação de mês e ilha."""
+    return tabela.reset_index().melt(
+        id_vars="mes",
+        var_name="ilha",
+        value_name="total",
+    )
